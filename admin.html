@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <title>GAMIFY Admin Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo">
+        <img src="logo.png" alt="Gamify" class="logo-icon">
+        <span class="logo-text">GAMIFY</span>
+      </div>
+      <nav class="nav">
+        <a href="index.html#home">Ana səhifə</a>
+        <a href="index.html#products">Məhsullar</a>
+        <a href="index.html#about">Haqqımızda</a>
+        <a href="index.html#contact">Əlaqə</a>
+        <a href="admin.html">Admin</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-btn" id="cartBtn">
+          <span>Səbət</span>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+        <button class="btn-primary" id="loginBtn">Daxil ol</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section admin-section">
+      <div class="container">
+        <div class="admin-head">
+          <div>
+            <h1>Admin panel</h1>
+            <p>Serverə gələn sifarişlər, mesajlar və balans sorğuları.</p>
+          </div>
+          <span class="admin-tag">Local development</span>
+        </div>
+
+        <div class="admin-tabs">
+          <button class="admin-tab-btn active" data-tab="orders">Sifarişlər</button>
+          <button class="admin-tab-btn" data-tab="contacts">Mesajlar</button>
+          <button class="admin-tab-btn" data-tab="balance">Balans sorğuları</button>
+        </div>
+
+        <div class="admin-tab-panel active" data-tab-panel="orders">
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+              <tr>
+                <th>ID</th>
+                <th>Məhsullar</th>
+                <th>Müştəri</th>
+                <th>Tarix</th>
+                <th>Status</th>
+                <th>Əməliyyat</th>
+              </tr>
+              </thead>
+              <tbody id="ordersBody"></tbody>
+            </table>
+            <div class="admin-empty" id="ordersEmpty">Hələ heç bir sifariş yoxdur.</div>
+          </div>
+        </div>
+
+        <div class="admin-tab-panel" data-tab-panel="contacts">
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+              <tr>
+                <th>ID</th>
+                <th>Ad</th>
+                <th>Email</th>
+                <th>Mesaj</th>
+                <th>Tarix</th>
+              </tr>
+              </thead>
+              <tbody id="contactsBody"></tbody>
+            </table>
+            <div class="admin-empty" id="contactsEmpty">Hələ heç bir mesaj yoxdur.</div>
+          </div>
+        </div>
+
+        <div class="admin-tab-panel" data-tab-panel="balance">
+          <h2>Balans sorğuları</h2>
+          <p class="admin-muted">
+            Müştərilərin balans artırma tələbləri. Təsdiqləyərkən müştərinin balansı avtomatik artır.
+          </p>
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+              <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>GAMIFY ID</th>
+                <th>Məbləğ</th>
+                <th>Bank</th>
+                <th>Status</th>
+                <th>Tarix</th>
+                <th>Qəbz</th>
+                <th>Əməliyyat</th>
+              </tr>
+              </thead>
+              <tbody id="balanceBody"></tbody>
+            </table>
+            <div class="admin-empty" id="balanceEmpty">Hələ heç bir balans sorğusu yoxdur.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast">Bildiriş</div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2025 GAMIFY Marketplace</p>
+      <div class="footer-links">
+        <a href="index.html#home">Ana səhifə</a>
+        <a href="index.html#products">Məhsullar</a>
+        <a href="index.html#about">Haqqımızda</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="admin.js"></script>
+</body>
+</html>
