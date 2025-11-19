@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <title>GAMIFY | Hesabım</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <div class="logo">
+      <img src="logo.png" alt="GAMIFY" class="logo-icon">
+      <span class="logo-text">GAMIFY</span>
+    </div>
+    <nav class="nav">
+      <a href="index.html#home">Ana səhifə</a>
+      <a href="index.html#products">Məhsullar</a>
+      <a href="index.html#about">Haqqımızda</a>
+      <a href="index.html#contact">Əlaqə</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" id="cartBtn">
+        <span>Səbət</span>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <button class="btn-primary" id="loginBtn">Daxil ol</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="section account-section">
+    <div class="container account-inner">
+      <aside class="account-sidebar">
+        <div class="account-user">
+          <div class="account-avatar" id="accountAvatar">U</div>
+          <div>
+            <div class="account-user-name" id="accountUserName">İstifadəçi</div>
+            <div class="account-user-email" id="accountUserEmail"></div>
+          </div>
+        </div>
+        <button class="account-tab-btn active" data-tab="profile">Profilim</button>
+        <button class="account-tab-btn" data-tab="payments">Ödənişlərim</button>
+        <button class="account-tab-btn" data-tab="orders">Sifarişlərim</button>
+        <button class="account-logout-btn" id="logoutBtn">Hesabdan çıx</button>
+      </aside>
+
+      <div class="account-main">
+        <div class="account-panel active" data-tab-panel="profile">
+          <h1>Profilim</h1>
+          <p class="account-muted">
+            Burada gələcəkdə profil məlumatlarını (ad, email, parol dəyişmə və s.) idarə edə bilərsən.
+          </p>
+        </div>
+
+        <div class="account-panel" data-tab-panel="payments">
+          <h1>Ödənişlərim</h1>
+          <p class="account-muted">
+            Balans artırma tələblərini və onların statusunu bu bölmədə görə bilərsən.
+          </p>
+
+          <div class="account-balance-box">
+            <div>
+              <div class="account-balance-label">Cari balans</div>
+              <div class="account-balance-value" id="accountBalanceValue">0 ₼</div>
+            </div>
+            <a href="balance.html" class="btn-primary account-balance-topup-btn">Balans artır</a>
+          </div>
+
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+              <tr>
+                <th>ID</th>
+                <th>Məbləğ</th>
+                <th>Bank</th>
+                <th>Status</th>
+                <th>Tarix</th>
+                <th>Qəbz</th>
+              </tr>
+              </thead>
+              <tbody id="myPaymentsBody"></tbody>
+            </table>
+            <div class="admin-empty" id="myPaymentsEmpty">
+              Hələ heç bir ödəniş tələbin yoxdur.
+            </div>
+          </div>
+        </div>
+
+        <div class="account-panel" data-tab-panel="orders">
+          <h1>Sifarişlərim</h1>
+          <p class="account-muted">
+            Burada səbətindən göndərdiyin bütün sifarişləri və onların statusunu görə bilərsən.
+          </p>
+
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+              <tr>
+                <th>ID</th>
+                <th>Məhsullar</th>
+                <th>Məbləğ</th>
+                <th>Status</th>
+                <th>Tarix</th>
+              </tr>
+              </thead>
+              <tbody id="myOrdersBody"></tbody>
+            </table>
+            <div class="admin-empty" id="myOrdersEmpty">
+              Hələ heç bir sifarişin yoxdur.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast">Bildiriş</div>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>© 2025 GAMIFY Marketplace</p>
+    <div class="footer-links">
+      <a href="index.html#home">Ana səhifə</a>
+      <a href="index.html#products">Məhsullar</a>
+      <a href="index.html#about">Haqqımızda</a>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

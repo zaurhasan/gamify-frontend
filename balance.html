@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <title>GAMIFY | Balans artırma</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <div class="logo">
+      <img src="logo.png" alt="GAMIFY" class="logo-icon">
+      <span class="logo-text">GAMIFY</span>
+    </div>
+    <nav class="nav">
+      <a href="index.html#home">Ana səhifə</a>
+      <a href="index.html#products">Məhsullar</a>
+      <a href="index.html#about">Haqqımızda</a>
+      <a href="index.html#contact">Əlaqə</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" id="cartBtn">
+        <span>Səbət</span>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <button class="btn-primary" id="loginBtn">Daxil ol</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="section balance-section">
+    <div class="container balance-inner">
+      <div class="balance-left">
+        <h1>Balans artırma</h1>
+        <p class="account-muted">
+          Seçdiyin bank kartına məbləği köçür, qəbz şəklini yüklə və balans artımı üçün sorğu göndər.
+        </p>
+
+        <div class="balance-note">
+          Balans sistemi yalnız GAMIFY hesabına bağlıdır. Balans artırmaq üçün əvvəlcə hesabına daxil olmalısan.
+        </div>
+
+        <form id="balanceForm" class="balance-form">
+          <input type="hidden" id="balanceEmail" name="email">
+          <input type="hidden" id="balanceMethod" name="method">
+          <input type="hidden" id="balanceId" name="gamifyId">
+
+          <div class="balance-options">
+            <div class="balance-card" data-method="kapital">
+              <div class="balance-card-image">
+                Burada Kapital Bank şəkli olacaq
+              </div>
+              <div class="balance-card-title">Kapital Bank</div>
+              <div class="balance-card-number">Kart nömrəsi: 5239 1517 1558 5181</div>
+              <button type="button" class="btn-primary balance-request-btn" data-method="kapital">
+                Balans artımı tələb et
+              </button>
+            </div>
+
+            <div class="balance-card" data-method="leobank">
+              <div class="balance-card-image">
+                Burada Leobank şəkli olacaq
+              </div>
+              <div class="balance-card-title">Leobank</div>
+              <div class="balance-card-number">Kart nömrəsi: 5411 2498 1219 1307</div>
+              <button type="button" class="btn-primary balance-request-btn" data-method="leobank">
+                Balans artımı tələb et
+              </button>
+            </div>
+          </div>
+
+          <div class="balance-fields">
+            <div class="balance-field">
+              <label for="balanceAmount">Məbləğ (₼)</label>
+              <input type="number" id="balanceAmount" name="amount" min="1" step="0.01" placeholder="Məsələn: 10">
+            </div>
+
+            <div class="balance-field">
+              <label for="balanceReceipt">Qəbz şəkli</label>
+              <div class="balance-file-row">
+                <input
+                  type="file"
+                  id="balanceReceipt"
+                  name="receipt"
+                  accept="image/*"
+                >
+                <span id="balanceReceiptName">Fayl seçilməyib</span>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <div class="balance-result" id="balanceResult" style="display:none;">
+          Faktura yoxlanıldıqdan sonra ödəniş məbləği balansınızda əks olunacaqdır.
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast">Bildiriş</div>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>© 2025 GAMIFY Marketplace</p>
+    <div class="footer-links">
+      <a href="index.html#home">Ana səhifə</a>
+      <a href="index.html#products">Məhsullar</a>
+      <a href="index.html#about">Haqqımızda</a>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
