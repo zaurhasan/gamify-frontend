@@ -20,7 +20,6 @@ const cartSummary = document.getElementById("cartSummary");
 const loginForm = document.getElementById("loginForm");
 const registerForm = document.getElementById("registerForm");
 const balanceForm = document.getElementById("balanceForm");
-
 const accountUserName = document.getElementById("accountUserName");
 const accountUserEmail = document.getElementById("accountUserEmail");
 const accountAvatar = document.getElementById("accountAvatar");
@@ -98,10 +97,7 @@ function updateAccountHeader() {
 
 function updateAccountBalanceDisplay() {
   if (!accountBalanceValue) return;
-  const value =
-    currentUser && typeof currentUser.balance === "number"
-      ? currentUser.balance
-      : 0;
+  const value = currentUser && typeof currentUser.balance === "number" ? currentUser.balance : 0;
   accountBalanceValue.textContent = value.toFixed(2) + " ₼";
 }
 
@@ -112,14 +108,7 @@ function refreshCurrentUserFromServer() {
   }
   fetch(API_BASE + "/api/me?email=" + encodeURIComponent(currentUser.email))
     .then(function (res) {
-      return res
-        .json()
-        .catch(function () {
-          return {};
-        })
-        .then(function (data) {
-          return { ok: res.ok, data: data };
-        });
+      return res.json().catch(() => ({})).then(data => ({ ok: res.ok, data }));
     })
     .then(function (result) {
       if (!result.ok || !result.data || !result.data.user) {
@@ -212,9 +201,7 @@ function loadCartFromStorage() {
     const storedItems = localStorage.getItem("gamify_cart_items");
     if (storedItems) {
       const parsed = JSON.parse(storedItems);
-      if (Array.isArray(parsed)) {
-        cartItems = parsed;
-      }
+      if (Array.isArray(parsed)) cartItems = parsed;
     }
   } catch (e) {}
   updateCartCount();
@@ -229,15 +216,10 @@ function saveCartToStorage() {
 
 function handleGameIdPrompt(button) {
   let msg = "";
-  if (button.classList.contains("uc-order-btn")) {
-    msg = "PUBG Mobile oyun ID-ni daxil et:";
-  } else if (button.classList.contains("ff-order-btn")) {
-    msg = "Free Fire oyun ID-ni daxil et:";
-  } else if (button.classList.contains("val-order-btn")) {
-    msg = "Riot ID və tag-ı daxil et:";
-  } else if (button.classList.contains("ps-order-btn")) {
-    msg = "PlayStation hesab e-mail və ya nickname-ni daxil et:";
-  }
+  if (button.classList.contains("uc-order-btn")) msg = "PUBG Mobile oyun ID-ni daxil et:";
+  else if (button.classList.contains("ff-order-btn")) msg = "Free Fire oyun ID-ni daxil et:";
+  else if (button.classList.contains("val-order-btn")) msg = "Riot ID və tag-ı daxil et:";
+  else if (button.classList.contains("ps-order-btn")) msg = "PlayStation hesab e-mail və ya nickname-ni daxil et:";
   if (!msg) return "";
   const result = window.prompt(msg);
   if (!result || !result.trim()) {
@@ -253,12 +235,10 @@ function bindCartButtons() {
     btn.addEventListener("click", function (e) {
       e.stopPropagation();
       e.preventDefault();
-
       if (!currentUser || !currentUser.email) {
         showToast("Sifariş üçün əvvəlcə hesabına daxil ol", true);
         return;
       }
-
       let gameId = "";
       if (
         btn.classList.contains("uc-order-btn") ||
@@ -267,12 +247,9 @@ function bindCartButtons() {
         btn.classList.contains("ps-order-btn")
       ) {
         const result = handleGameIdPrompt(btn);
-        if (result === null) {
-          return;
-        }
+        if (result === null) return;
         gameId = result;
       }
-
       const name = btn.getAttribute("data-product") || "Məhsul";
       const rawPrice = btn.getAttribute("data-price") || "0";
       const price = parseFloat(rawPrice);
@@ -281,7 +258,6 @@ function bindCartButtons() {
       else if (btn.classList.contains("ff-order-btn")) type = "ff";
       else if (btn.classList.contains("val-order-btn")) type = "val";
       else if (btn.classList.contains("ps-order-btn")) type = "ps";
-
       const payload = {
         email: currentUser.email,
         item: {
@@ -291,44 +267,28 @@ function bindCartButtons() {
           gameId: gameId || null
         }
       };
-
       fetch(API_BASE + "/api/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       })
         .then(function (res) {
-          return res
-            .json()
-            .catch(function () {
-              return {};
-            })
-            .then(function (data) {
-              return { ok: res.ok, data: data };
-            });
+          return res.json().catch(() => ({})).then(data => ({ ok: res.ok, data }));
         })
         .then(function (result) {
           if (!result.ok || !result.data || !result.data.ok) {
-            const msg =
-              (result.data && result.data.message) ||
-              "Sifarişi tamamlayarkən xəta baş verdi";
+            const msg = (result.data && result.data.message) || "Sifarişi tamamlayarkən xəta baş verdi";
             showToast(msg, true);
             return;
           }
-
           const response = result.data;
-
           if (typeof response.balance === "number") {
             currentUser.balance = response.balance;
             saveUserToStorage();
             updateAccountBalanceDisplay();
           }
-
           const order = response.order;
-          const msg =
-            order && order.id
-              ? "Sifariş qeydə alındı: " + order.id
-              : "Sifariş qeydə alındı";
+          const msg = order && order.id ? "Sifariş qeydə alındı: " + order.id : "Sifariş qeydə alındı";
           showToast(msg, false);
           loadMyOrders();
         })
@@ -385,8 +345,7 @@ function loadMyOrders() {
   if (!currentUser || !currentUser.email) {
     myOrdersBody.innerHTML = "";
     if (myOrdersEmpty) {
-      myOrdersEmpty.textContent =
-        "Sifarişləri görmək üçün əvvəlcə daxİl olmalısan.";
+      myOrdersEmpty.textContent = "Sifarişləri görmək üçün əvvəlcə daxİl olmalısan.";
       myOrdersEmpty.style.display = "block";
     }
     return;
@@ -398,14 +357,7 @@ function loadMyOrders() {
   }
   fetch(API_BASE + "/api/my-orders?email=" + encodeURIComponent(currentUser.email))
     .then(function (res) {
-      return res
-        .json()
-        .catch(function () {
-          return {};
-        })
-        .then(function (data) {
-          return { ok: res.ok, data: data };
-        });
+      return res.json().catch(() => ({})).then(data => ({ ok: res.ok, data }));
     })
     .then(function (result) {
       if (!result.ok) {
@@ -434,11 +386,8 @@ function loadMyOrders() {
           const tr = document.createElement("tr");
           const productsText = Array.isArray(order.items)
             ? order.items
-                .map(function (item) {
-                  const price =
-                    typeof item.price === "number"
-                      ? item.price.toFixed(2) + " ₼"
-                      : "";
+                ..map(function (item) {
+                  const price = typeof item.price === "number" ? item.price.toFixed(2) + " ₼" : "";
                   const gameId = item.gameId ? " [" + item.gameId + "]" : "";
                   return (item.name || "Məhsul") + " (" + price + ")" + gameId;
                 })
@@ -490,8 +439,7 @@ function loadMyPayments() {
   if (!currentUser || !currentUser.email) {
     myPaymentsBody.innerHTML = "";
     if (myPaymentsEmpty) {
-      myPaymentsEmpty.textContent =
-        "Ödənişləri görmək üçün əvvəlcə daxil olmalısan.";
+      myPaymentsEmpty.textContent = "Ödənişləri görmək üçün əvvəlcə daxil olmalısan.";
       myPaymentsEmpty.style.display = "block";
     }
     return;
@@ -501,20 +449,9 @@ function loadMyPayments() {
     myPaymentsEmpty.textContent = "Yüklənir...";
     myPaymentsEmpty.style.display = "block";
   }
-  fetch(
-    API_BASE +
-      "/api/my-balance-requests?email=" +
-      encodeURIComponent(currentUser.email)
-  )
+  fetch(API_BASE + "/api/my-balance-requests?email=" + encodeURIComponent(currentUser.email))
     .then(function (res) {
-      return res
-        .json()
-        .catch(function () {
-          return {};
-        })
-        .then(function (data) {
-          return { ok: res.ok, data: data };
-        });
+      return res.json().catch(() => ({})).then(data => ({ ok: res.ok, data }));
     })
     .then(function (result) {
       if (!result.ok) {
@@ -525,14 +462,10 @@ function loadMyPayments() {
         showToast("Ödənişləri yükləmək alınmadı", true);
         return;
       }
-      const list =
-        result.data && Array.isArray(result.data.requests)
-          ? result.data.requests
-          : [];
+      const list = result.data && Array.isArray(result.data.requests) ? result.data.requests : [];
       if (!list.length) {
         if (myPaymentsEmpty) {
-          myPaymentsEmpty.textContent =
-            "Hələ heç bir ödəniş tələbin yoxdur.";
+          myPaymentsEmpty.textContent = "Hələ heç bir ödəniş tələbin yoxdur.";
           myPaymentsEmpty.style.display = "block";
         }
         return;
@@ -560,9 +493,7 @@ function loadMyPayments() {
             statusLabel(status) +
             "</span>";
           const receiptHtml = item.receiptUrl
-            ? '<a href="http://localhost:4000' +
-              item.receiptUrl +
-              '" target="_blank">Bax</a>'
+            ? '<a href="' + API_BASE + item.receiptUrl + '" target="_blank">Bax</a>'
             : "-";
           tr.innerHTML =
             "<td>" +
@@ -595,13 +526,8 @@ function loadMyPayments() {
     });
 }
 
-if (searchInput) {
-  searchInput.addEventListener("input", applyFilters);
-}
-
-if (categoryFilter) {
-  categoryFilter.addEventListener("change", applyFilters);
-}
+if (searchInput) searchInput.addEventListener("input", applyFilters);
+if (categoryFilter) categoryFilter.addEventListener("change", applyFilters);
 
 if (contactForm) {
   contactForm.addEventListener("submit", function (e) {
@@ -624,19 +550,11 @@ if (contactForm) {
       body: JSON.stringify(payload)
     })
       .then(function (res) {
-        return res
-          .json()
-          .catch(function () {
-            return {};
-          })
-          .then(function (data) {
-            return { ok: res.ok, data: data };
-          });
+        return res.json().catch(() => ({})).then(data => ({ ok: res.ok, data }));
       })
       .then(function (result) {
         if (!result.ok) {
-          const msg =
-            (result.data && result.data.message) || "Xəta baş verdi";
+          const msg = (result.data && result.data.message) || "Xəta baş verdi";
           showToast(msg, true);
           return;
         }
@@ -715,26 +633,17 @@ if (loginForm) {
       email: email.value.trim(),
       password: password.value
     };
-    fetch(API_BASE + "/api/auth/login", {
+    fetch(API_BASE + "/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     })
       .then(function (res) {
-        return res
-          .json()
-          .catch(function () {
-            return {};
-          })
-          .then(function (data) {
-            return { ok: res.ok, data: data };
-          });
+        return res.json().catch(() => ({})).then(data => ({ ok: res.ok, data }));
       })
       .then(function (result) {
         if (!result.ok) {
-          const msg =
-            (result.data && result.data.message) ||
-            "Daxil olarkən xəta baş verdi";
+          const msg = (result.data && result.data.message) || "Daxil olarkən xəta baş verdi";
           showToast(msg, true);
           return;
         }
@@ -769,26 +678,17 @@ if (registerForm) {
       email: email.value.trim(),
       password: password.value
     };
-    fetch(API_BASE + "/api/auth/register", {
+    fetch(API_BASE + "/api/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     })
       .then(function (res) {
-        return res
-          .json()
-          .catch(function () {
-            return {};
-          })
-          .then(function (data) {
-            return { ok: res.ok, data: data };
-          });
+        return res.json().catch(() => ({})).then(data => ({ ok: res.ok, data }));
       })
       .then(function (result) {
         if (!result.ok) {
-          const msg =
-            (result.data && result.data.message) ||
-            "Qeydiyyat zamanı xəta baş verdi";
+          const msg = (result.data && result.data.message) || "Qeydiyyat zamanı xəta baş verdi";
           showToast(msg, true);
           return;
         }
@@ -820,7 +720,6 @@ if (registerForm) {
 
 function initBalancePage() {
   if (!balanceForm) return;
-
   const methodInput = document.getElementById("balanceMethod");
   const idInput = document.getElementById("balanceId");
   const amountInput = document.getElementById("balanceAmount");
@@ -828,7 +727,6 @@ function initBalancePage() {
   const resultBox = document.getElementById("balanceResult");
   const buttons = document.querySelectorAll(".balance-request-btn");
   const fileNameSpan = document.getElementById("balanceReceiptName");
-
   if (receiptInput && fileNameSpan) {
     receiptInput.addEventListener("change", function () {
       if (receiptInput.files && receiptInput.files.length) {
@@ -838,26 +736,21 @@ function initBalancePage() {
       }
     });
   }
-
   buttons.forEach(function (btn) {
     btn.addEventListener("click", function () {
       if (!currentUser || !currentUser.email) {
         showToast("Balans artırmaq üçün əvvəlcə daxil ol", true);
         return;
       }
-
       if (!amountInput || !amountInput.value.trim()) {
         showToast("Məbləği daxil et", true);
         return;
       }
-
       if (!receiptInput || !receiptInput.files || !receiptInput.files.length) {
         showToast("Qəbz şəklini əlavə et", true);
         return;
       }
-
       const method = btn.getAttribute("data-method") || "";
-
       const fd = new FormData();
       fd.append("email", currentUser.email);
       fd.append("amount", amountInput.value.trim());
@@ -865,37 +758,25 @@ function initBalancePage() {
       if (methodInput && methodInput.value) fd.append("method", methodInput.value);
       if (idInput && idInput.value.trim()) fd.append("gamifyId", idInput.value.trim());
       fd.append("receipt", receiptInput.files[0]);
-
       fetch(API_BASE + "/api/balance-topup", {
         method: "POST",
         body: fd
       })
         .then(function (res) {
-          return res
-            .json()
-            .catch(function () {
-              return {};
-            })
-            .then(function (data) {
-              return { ok: res.ok, data: data };
-            });
+          return res.json().catch(() => ({})).then(data => ({ ok: res.ok, data }));
         })
         .then(function (result) {
           if (!result.ok) {
-            const msg =
-              (result.data && result.data.message) ||
-              "Sorğunu göndərərkən xəta baş verdi";
+            const msg = (result.data && result.data.message) || "Sorğunu göndərərkən xəta baş verdi";
             showToast(msg, true);
             return;
           }
-
           if (amountInput) amountInput.value = "";
           if (idInput) idInput.value = "";
           if (receiptInput) receiptInput.value = "";
           if (fileNameSpan) fileNameSpan.textContent = "Fayl seçilməyib";
           if (methodInput) methodInput.value = "";
           if (resultBox) resultBox.style.display = "block";
-
           showToast("Balans artımı sorğusu göndərildi", false);
           refreshCurrentUserFromServer();
           loadMyPayments();
@@ -974,6 +855,4 @@ bindAccountTabs();
 refreshCurrentUserFromServer();
 loadMyOrders();
 loadMyPayments();
-
 initBalancePage();
-
