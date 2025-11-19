@@ -1,4 +1,4 @@
-const API_BASE = "https://gamify-backend-3b23.onrender.com";
+const API_BASE = "https://gamify-api-71hf.onrender.com";
 
 const searchInput = document.getElementById("searchInput");
 const categoryFilter = document.getElementById("categoryFilter");
@@ -974,4 +974,5 @@ bindAccountTabs();
 refreshCurrentUserFromServer();
 loadMyOrders();
 loadMyPayments();
+
 initBalancePage();
