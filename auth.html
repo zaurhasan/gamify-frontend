@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <title>GAMIFY | Daxil ol / Qeydiyyat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo">
+        <img src="logo.png" alt="Gamify" class="logo-icon">
+        <span class="logo-text">GAMIFY</span>
+      </div>
+      <nav class="nav">
+        <a href="index.html#home">Ana səhifə</a>
+        <a href="index.html#products">Məhsullar</a>
+        <a href="index.html#about">Haqqımızda</a>
+        <a href="index.html#contact">Əlaqə</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-btn" id="cartBtn">
+          <span>Səbət</span>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+        <button class="btn-primary" id="loginBtn">Daxil ol</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section auth-section">
+      <div class="container auth-inner">
+        <div class="auth-card">
+          <h1>Hesab</h1>
+          <p class="auth-subtitle">Daxil ol və ya yeni hesab yarat.</p>
+
+          <div class="auth-tabs">
+            <button class="auth-tab-btn active" data-tab="login">Daxil ol</button>
+            <button class="auth-tab-btn" data-tab="register">Qeydiyyat</button>
+          </div>
+
+          <div class="auth-tab-panel active" data-tab-panel="login">
+            <form id="loginForm" class="auth-form">
+              <input type="email" id="loginEmail" placeholder="Email" autocomplete="email">
+              <input type="password" id="loginPassword" placeholder="Şifrə" autocomplete="current-password">
+              <button type="submit" class="btn-primary auth-submit">Daxil ol</button>
+            </form>
+          </div>
+
+          <div class="auth-tab-panel" data-tab-panel="register">
+            <form id="registerForm" class="auth-form">
+              <input type="text" id="registerName" placeholder="Ad">
+              <input type="email" id="registerEmail" placeholder="Email" autocomplete="email">
+              <input type="password" id="registerPassword" placeholder="Şifrə" autocomplete="new-password">
+              <button type="submit" class="btn-primary auth-submit">Qeydiyyat</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast">Bildiriş</div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2025 GAMIFY Marketplace</p>
+      <div class="footer-links">
+        <a href="index.html#home">Ana səhifə</a>
+        <a href="index.html#products">Məhsullar</a>
+        <a href="index.html#about">Haqqımızda</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
