@@ -976,3 +976,4 @@ loadMyOrders();
 loadMyPayments();
 
 initBalancePage();
+
